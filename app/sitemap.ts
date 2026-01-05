@@ -1,4 +1,7 @@
 import { MetadataRoute } from 'next'
+export const dynamic = 'force-static'; // <--- ADD THIS LINE
+
+
 import { blogPosts } from '@/lib/blogData'
 
 export default function sitemap(): MetadataRoute.Sitemap {
@@ -16,7 +19,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       { url: `${baseUrl}/catering`, lastModified: new Date() },
       { url: `${baseUrl}/about`, lastModified: new Date() },
       { url: `${baseUrl}/bar`, lastModified: new Date() },
-      
+
    // ...posts, // Google will find every blog post here!
   ]
 }
