@@ -3,11 +3,16 @@ import { blogPosts } from "@/lib/blogData";
 import { notFound } from "next/navigation";
 import { motion } from "framer-motion";
 
+
+export function generateStaticParams() {
+  return blogPosts.map((post) => ({
+    slug: post.slug,
+  }));
+}
+
 export default function BlogPost({ params }: { params: { slug: string } }) {
   const post = blogPosts.find((p) => p.slug === params.slug);
-
-  if (!post) notFound();
-
+  if (!post) notFound()
   return (
     <article className="bg-[#fdfcf8] min-h-screen p-10 md:p-20 pb-40">
       <div className="max-w-3xl mx-auto">
