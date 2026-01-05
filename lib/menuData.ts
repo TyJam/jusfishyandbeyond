@@ -40,6 +40,7 @@ export const menuSections = [
     id: "punches", 
     title: "Punches", 
     size: "square", 
+    image: "/images/menu/Seamosspunch.jpg",
     items: ["Daddy's Punch", "Sea Moss & Linseed", "Peanut Punch",  "Carrot Punch", "Banana Punch", "Beetroot Punch", "Population Punch"] 
   },
   { 

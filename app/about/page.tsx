@@ -33,7 +33,7 @@ export default function AboutPage() {
           
           <div className="relative aspect-[3/4] rounded-[3rem] overflow-hidden bg-stone-100 shadow-xl">
              {/* Use an image of the founder or the original shop here */}
-             <img src="/images/heritage-photo.jpg" className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-1000" alt="Jus Fishy Heritage" />
+             <img src="/images/prettyface/jus-fishy-branding-brooklyn-flatbush-resturant.jpg" className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-1000" alt="Jus Fishy Heritage" />
           </div>
         </div>
       </div>

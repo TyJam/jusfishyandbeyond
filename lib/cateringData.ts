@@ -28,7 +28,7 @@ export const cateringSections: CateringSection[] = [
     id: "ocean-harvest",
     title: "Ocean Harvest",
     size: "wide",
-    image: "/images/catering/jus-fishy-salmon-shrimp-kingfish-catering-flatbush.jpg",
+    image: "/images/catering/shrimp_tray_1.jpg",
     items: [
       { name: "Steamed Salmon" },
       { name: "Grilled Tilapia" },
@@ -40,7 +40,7 @@ export const cateringSections: CateringSection[] = [
     id: "chicken-collection",
     title: "The Chicken Collection",
     size: "tall",
-    image: "/images/catering/jus-fishy-caribbean-bbq-chicken-catering-flatbush-brooklyn.jpg",
+    image: "/images/catering/chicken.webp",
     items: [
       { name: "Jerk Chicken" },
       { name: "BBQ Chicken" },
@@ -51,7 +51,8 @@ export const cateringSections: CateringSection[] = [
   {
     id: "staples-sides",
     title: "Signature Staples & Sides",
-    size: "wide",
+      size: "wide",
+    image:"/images/catering/pasta.jpeg",
     items: [
       { name: "Trini Pasta" },
       { name: "Mac & Cheese" },

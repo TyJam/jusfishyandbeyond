@@ -20,7 +20,7 @@ const faceImages = [
   { src: "/images/prettyface/jus-fishy-branding-brooklyn-flatbush-resturant.jpg", alt: "A warm welcome" },
   { src: "/images/prettyface/jus-fishy-family-affair.jpg", alt: "The vibe at the bar" },
   { src: "/images/prettyface/jus-fishy-restaurant-events.jpg", alt: "Local regulars" },
-  { src: "/images/pretty/face/behind-scenes.jpg", alt: "Kitchen focus" }, // Hidden
+  { src: "/images/prettyface/istockphoto-2000117676-612x612.jpg", alt: "Kitchen focus" }, // Hidden
 ];
 
 export default function GalleryPage() {
