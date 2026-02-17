@@ -5,12 +5,13 @@ export const dynamic = 'force-static'; // <--- ADD THIS LINE
 import { blogPosts } from '@/lib/blogData'
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = 'https://jusfishy.com'
+  const baseUrl = 'https://www.jusfishyandbeyond.com/'
 
-  const posts = blogPosts.map((post) => ({
-    url: `${baseUrl}/blog/${post.slug}`,
+ const posts = await client.fetch(`*[_type == "post"]{ "slug": slug.current }`);
+    const blogUrls = posts.map((post: any) => ({
+    url: `https://jusfishy.com/stories/${post.slug}`,
     lastModified: new Date(),
-  }))
+  }));
 
   return [
     { url: baseUrl, lastModified: new Date() },
@@ -18,8 +19,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${baseUrl}/gallery`, lastModified: new Date() },
       { url: `${baseUrl}/catering`, lastModified: new Date() },
       { url: `${baseUrl}/about`, lastModified: new Date() },
-      { url: `${baseUrl}/bar`, lastModified: new Date() },
-
-   // ...posts, // Google will find every blog post here!
+    { url: `${baseUrl}/bar`, lastModified: new Date() },
+      ...blogUrls
   ]
 }
+
