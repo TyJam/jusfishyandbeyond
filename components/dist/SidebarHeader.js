@@ -50,7 +50,7 @@ function SidebarHeader() {
                 React.createElement("a", { href: "https://www.google.com/maps/dir/?api=1&destination=1059+Flatbush+Ave+Brooklyn+NY+11226", target: "_blank", className: "group flex flex-col items-center gap-2" },
                     React.createElement("div", { className: "p-2 rounded-full border border-stone-100 group-hover:bg-[#1B4D3E] group-hover:text-white transition-all" },
                         React.createElement(lucide_react_1.MapPin, { size: 16, className: "text-stone-400 group-hover:text-white" }))),
-                React.createElement(link_1["default"], { href: "https://instagram.com", target: "_blank" },
+                React.createElement(link_1["default"], { href: "https://www.instagram.com/jusfishy_and_beyond/", target: "_blank" },
                     React.createElement(lucide_react_1.Instagram, { size: 18, className: "text-stone-400 hover:text-[#1B4D3E] transition-colors" }))))));
 }
 exports["default"] = SidebarHeader;

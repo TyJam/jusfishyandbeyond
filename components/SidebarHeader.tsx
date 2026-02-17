@@ -146,7 +146,7 @@ export default function SidebarHeader() {
             </div>
           </a>
 
-          <Link href="https://instagram.com" target="_blank">
+          <Link href="https://www.instagram.com/jusfishy_and_beyond/" target="_blank">
             <Instagram size={18} className="text-stone-400 hover:text-[#1B4D3E] transition-colors" />
           </Link>
         </div>
