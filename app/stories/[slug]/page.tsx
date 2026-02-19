@@ -2,18 +2,20 @@ import { client } from "@/lib/sanity";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 
-// 1. THIS IS THE FUNCTION THE BUILD IS ASKING FOR
-// It must be in a Server Component (No "use client" at the top)
+// 1. This function is CRITICAL for 'output: export'
+// It MUST be exported and MUST be in a server component.
 export async function generateStaticParams() {
   const query = `*[_type == "post"]{ "slug": slug.current }`;
   const posts = await client.fetch(query);
+
+  if (!posts) return [];
 
   return posts.map((post: { slug: string }) => ({
     slug: post.slug,
   }));
 }
 
-// 2. The Page Component
+// 2. The Page Component (Next.js 15 uses a Promise for params)
 export default async function StoryPage({
   params,
 }: {
@@ -21,7 +23,7 @@ export default async function StoryPage({
 }) {
   const { slug } = await params;
 
-  // Fetch the data from Sanity
+  // Fetch the data from your Sanity Cloud
   const query = `*[_type == "post" && slug.current == $slug][0]{
     title,
     description,
@@ -30,7 +32,7 @@ export default async function StoryPage({
 
   const post = await client.fetch(query, { slug });
 
-  // If the slug doesn't exist in Sanity, show 404
+  // 404 handler
   if (!post) {
     notFound();
   }
@@ -52,7 +54,11 @@ export default async function StoryPage({
             {post.description}
           </p>
           <div className="text-stone-600 leading-[2.2] text-lg space-y-8 font-light">
-            <p>The soul of Brooklyn is cooked into every dish at Jus Fishy. This story is a testament to the freshness and ethical practices that have defined us since 1987.</p>
+            <p>
+              Every dish at Jus Fishy tells a story of Brooklyn heritage. 
+              Our commitment to the freshest catch and ethical fishing has 
+              remained unchanged since 1987.
+            </p>
           </div>
         </div>
 
