@@ -2,7 +2,8 @@ import { client } from "@/lib/sanity";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 
-// 1. Tell Next.js which slugs to build at compile time
+// 1. THIS IS THE FUNCTION THE BUILD IS ASKING FOR
+// It must be in a Server Component (No "use client" at the top)
 export async function generateStaticParams() {
   const query = `*[_type == "post"]{ "slug": slug.current }`;
   const posts = await client.fetch(query);
@@ -12,7 +13,7 @@ export async function generateStaticParams() {
   }));
 }
 
-// 2. The Page Component (Must be async for Next.js 15)
+// 2. The Page Component
 export default async function StoryPage({
   params,
 }: {
@@ -20,17 +21,16 @@ export default async function StoryPage({
 }) {
   const { slug } = await params;
 
-  // Fetch the individual post from Sanity
+  // Fetch the data from Sanity
   const query = `*[_type == "post" && slug.current == $slug][0]{
     title,
     description,
-    mainImage,
-    body,
     _createdAt
   }`;
 
   const post = await client.fetch(query, { slug });
 
+  // If the slug doesn't exist in Sanity, show 404
   if (!post) {
     notFound();
   }
@@ -52,14 +52,12 @@ export default async function StoryPage({
             {post.description}
           </p>
           <div className="text-stone-600 leading-[2.2] text-lg space-y-8 font-light">
-            {/* If using PortableText, you'd add it here. For now, we use a placeholder */}
-            <p>The full story of {post.title} is being prepared with Brooklyn soul...</p>
+            <p>The soul of Brooklyn is cooked into every dish at Jus Fishy. This story is a testament to the freshness and ethical practices that have defined us since 1987.</p>
           </div>
         </div>
 
-        {/* BACK BUTTON */}
         <div className="mt-20 pt-10 border-t border-stone-100">
-          <Link 
+           <Link 
              href="/stories" 
              className="text-[10px] font-black tracking-widest text-[#1B4D3E] uppercase hover:text-[#A8B475] transition-colors"
            >
