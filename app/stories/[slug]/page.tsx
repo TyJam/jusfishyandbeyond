@@ -2,23 +2,31 @@ import { client } from "@/lib/sanity";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 
-// 1. THIS IS THE MASTER KEY: 
-// Tells Next.js to only build the pages we define in generateStaticParams.
-export const dynamicParams = false; 
+// 1. Tell Next.js to only build what is in the database
+export const dynamicParams = false;
 
-// 2. Fetch the slugs for the build process
+// 2. The function that the build is screaming for
+// It MUST be a named export and it MUST be async
 export async function generateStaticParams() {
-  const query = `*[_type == "post"]{ "slug": slug.current }`;
-  const posts = await client.fetch(query);
+  try {
+    const query = `*[_type == "post"]{ "slug": slug.current }`;
+    const posts = await client.fetch(query);
 
-  if (!posts) return [];
+    if (!posts || posts.length === 0) {
+      console.log("⚠️ No posts found in Sanity. Build might fail.");
+      return [];
+    }
 
-  return posts.map((post: { slug: string }) => ({
-    slug: post.slug,
-  }));
+    return posts.map((post: { slug: string }) => ({
+      slug: post.slug,
+    }));
+  } catch (error) {
+    console.error("❌ Sanity Fetch Error:", error);
+    return [];
+  }
 }
 
-// 3. The Page Component
+// 3. The Page Component (Next.js 15 requirement: params is a Promise)
 export default async function StoryPage({
   params,
 }: {
@@ -26,7 +34,7 @@ export default async function StoryPage({
 }) {
   const { slug } = await params;
 
-  // Fetch the data from Sanity
+  // Fetch data
   const query = `*[_type == "post" && slug.current == $slug][0]{
     title,
     description,
@@ -56,11 +64,7 @@ export default async function StoryPage({
             {post.description}
           </p>
           <div className="text-stone-600 leading-[2.2] text-lg space-y-8 font-light">
-            <p>
-              Experience the heritage and soul of Brooklyn. Every dish at Jus Fishy 
-              is a testament to our commitment to freshness and the ethical working 
-              practices of our fishermen since 1987.
-            </p>
+            <p>Authentic seafood prepared with Brooklyn soul. This is the Jus Fishy legacy.</p>
           </div>
         </div>
 
