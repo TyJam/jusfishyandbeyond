@@ -2,8 +2,11 @@ import { client } from "@/lib/sanity";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 
-// 1. This function is CRITICAL for 'output: export'
-// It MUST be exported and MUST be in a server component.
+// 1. THIS IS THE MASTER KEY: 
+// Tells Next.js to only build the pages we define in generateStaticParams.
+export const dynamicParams = false; 
+
+// 2. Fetch the slugs for the build process
 export async function generateStaticParams() {
   const query = `*[_type == "post"]{ "slug": slug.current }`;
   const posts = await client.fetch(query);
@@ -15,7 +18,7 @@ export async function generateStaticParams() {
   }));
 }
 
-// 2. The Page Component (Next.js 15 uses a Promise for params)
+// 3. The Page Component
 export default async function StoryPage({
   params,
 }: {
@@ -23,7 +26,7 @@ export default async function StoryPage({
 }) {
   const { slug } = await params;
 
-  // Fetch the data from your Sanity Cloud
+  // Fetch the data from Sanity
   const query = `*[_type == "post" && slug.current == $slug][0]{
     title,
     description,
@@ -32,7 +35,6 @@ export default async function StoryPage({
 
   const post = await client.fetch(query, { slug });
 
-  // 404 handler
   if (!post) {
     notFound();
   }
@@ -55,9 +57,9 @@ export default async function StoryPage({
           </p>
           <div className="text-stone-600 leading-[2.2] text-lg space-y-8 font-light">
             <p>
-              Every dish at Jus Fishy tells a story of Brooklyn heritage. 
-              Our commitment to the freshest catch and ethical fishing has 
-              remained unchanged since 1987.
+              Experience the heritage and soul of Brooklyn. Every dish at Jus Fishy 
+              is a testament to our commitment to freshness and the ethical working 
+              practices of our fishermen since 1987.
             </p>
           </div>
         </div>
