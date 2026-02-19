@@ -2,80 +2,82 @@ import { client } from "@/lib/sanity";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 
-// 1. Tell Next.js to only build what is in the database
-export const dynamicParams = false;
+// --- 1. DYNAMIC SEO METADATA ---
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
+  const post = await client.fetch(`*[_type == "post" && slug.current == $slug][0]{title, description}`, { slug });
+  
+  if (!post) return { title: "Story Not Found" };
 
-// 2. The function that the build is screaming for
-// It MUST be a named export and it MUST be async
-export async function generateStaticParams() {
-  try {
-    const query = `*[_type == "post"]{ "slug": slug.current }`;
-    const posts = await client.fetch(query);
-
-    if (!posts || posts.length === 0) {
-      console.log("⚠️ No posts found in Sanity. Build might fail.");
-      return [];
+  return {
+    title: `${post.title} | Jus Fishy & Beyond Brooklyn`,
+    description: post.description,
+    openGraph: {
+      title: post.title,
+      description: post.description,
+      type: 'article',
     }
-
-    return posts.map((post: { slug: string }) => ({
-      slug: post.slug,
-    }));
-  } catch (error) {
-    console.error("❌ Sanity Fetch Error:", error);
-    return [];
-  }
+  };
 }
 
-// 3. The Page Component (Next.js 15 requirement: params is a Promise)
-export default async function StoryPage({
-  params,
-}: {
-  params: Promise<{ slug: string }>;
-}) {
+export default async function StoryPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
+  const post = await client.fetch(`*[_type == "post" && slug.current == $slug][0]`, { slug });
 
-  // Fetch data
-  const query = `*[_type == "post" && slug.current == $slug][0]{
-    title,
-    description,
-    _createdAt
-  }`;
+  if (!post) notFound();
 
-  const post = await client.fetch(query, { slug });
-
-  if (!post) {
-    notFound();
-  }
+  // --- 2. JSON-LD STRUCTURED DATA (The Secret SEO Engine) ---
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": post.title,
+    "description": post.description,
+    "author": {
+      "@type": "Organization",
+      "name": "Jus Fishy & Beyond"
+    },
+    "publisher": {
+      "@type": "Restaurant",
+      "name": "Jus Fishy & Beyond",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "1059 Flatbush Ave",
+        "addressLocality": "Brooklyn",
+        "addressRegion": "NY",
+        "postalCode": "11226"
+      }
+    }
+  };
 
   return (
-    <article className="bg-[#fdfcf8] min-h-screen p-10 md:p-20 pb-40">
-      <div className="max-w-3xl mx-auto">
-        <header className="mb-20">
-          <p className="text-[#A8B475] font-black tracking-[0.5em] text-[10px] uppercase mb-8">
-            {new Date(post._createdAt).toLocaleDateString()}
-          </p>
-          <h1 className="text-6xl md:text-8xl font-serif text-[#1B4D3E] leading-[1.1] mb-12">
-            {post.title}
-          </h1>
-        </header>
+    <article className="bg-[#fdfcf8] min-h-screen p-6 md:p-20">
+      {/* Add the JSON-LD to the page head */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
 
-        <div className="max-w-none">
-          <p className="text-xl font-serif italic text-stone-800 leading-loose mb-12 border-l-4 border-[#A8B475] pl-8">
-            {post.description}
-          </p>
-          <div className="text-stone-600 leading-[2.2] text-lg space-y-8 font-light">
-            <p>Authentic seafood prepared with Brooklyn soul. This is the Jus Fishy legacy.</p>
-          </div>
-        </div>
+      <header className="max-w-3xl mx-auto mb-16">
+        {/* Semantic HTML: Use H1 for the main broad keyword */}
+        <h1 className="text-6xl md:text-8xl font-serif text-[#1B4D3E] leading-[1.1] mb-8">
+          {post.title}
+        </h1>
+        <p className="text-[#A8B475] font-black tracking-widest text-[10px] uppercase">
+          Brooklyn • Authentic • Fresh
+        </p>
+      </header>
 
-        <div className="mt-20 pt-10 border-t border-stone-100">
-           <Link 
-             href="/stories" 
-             className="text-[10px] font-black tracking-widest text-[#1B4D3E] uppercase hover:text-[#A8B475] transition-colors"
-           >
-             ← Back to Stories
-           </Link>
-        </div>
+      <div className="max-w-3xl mx-auto prose prose-stone lg:prose-xl">
+        <p className="text-xl font-serif italic text-stone-800 leading-relaxed mb-12">
+          {post.description}
+        </p>
+        {/* Your Article content goes here */}
+      </div>
+      
+      <div className="mt-20 max-w-3xl mx-auto pt-10 border-t border-stone-100">
+         <Link href="/stories" className="text-[10px] font-black tracking-widest text-[#1B4D3E] uppercase hover:text-[#A8B475] transition-colors">
+           ← Back to Stories
+         </Link>
       </div>
     </article>
   );

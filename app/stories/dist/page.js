@@ -36,22 +36,66 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 exports.__esModule = true;
+exports.metadata = void 0;
 var sanity_1 = require("@/lib/sanity");
 var link_1 = require("next/link");
+// 1. ADVANCED METADATA (Static for the List Page)
+exports.metadata = {
+    title: "Brooklyn Seafood Stories & Catering Insights | Jus Fishy & Beyond",
+    description: "Explore the authentic flavors of Flatbush. From our famous BBQ salmon secrets to corporate catering guides, read the stories behind the soul of Brooklyn seafood.",
+    alternates: {
+        canonical: "https://www.jusfishyandbeyond.com/stories"
+    },
+    openGraph: {
+        title: "Seafood & Soul: The Jus Fishy Stories",
+        description: "Authentic Caribbean flavors and Brooklyn heritage.",
+        url: "https://www.jusfishyandbeyond.com/stories",
+        type: "website"
+    }
+};
 function BlogStories() {
     return __awaiter(this, void 0, void 0, function () {
-        var posts;
+        var posts, jsonLd;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0: return [4 /*yield*/, sanity_1.client.fetch("*[_type == \"post\"] | order(_createdAt desc)")];
                 case 1:
                     posts = _a.sent();
-                    return [2 /*return*/, (React.createElement("div", { className: "bg-white min-h-screen p-10 md:p-20" },
-                            React.createElement("h1", { className: "text-7xl font-serif text-[#1B4D3E] mb-20 border-b border-stone-100 pb-10" }, "Stories."),
-                            React.createElement("div", { className: "grid grid-cols-1 md:grid-cols-2 gap-16 max-w-6xl" }, posts.map(function (post) { return (React.createElement(link_1["default"], { href: "/stories/" + post.slug.current, key: post._id, className: "group" },
-                                React.createElement("p", { className: "text-[10px] font-black tracking-[0.4em] text-[#A8B475] uppercase mb-4" }, new Date(post._createdAt).toLocaleDateString()),
-                                React.createElement("h2", { className: "text-3xl font-serif italic text-jusBlack group-hover:text-[#1B4D3E] transition-colors leading-tight" }, post.title),
-                                React.createElement("p", { className: "mt-4 text-stone-500 text-sm leading-relaxed" }, post.description))); }))))];
+                    jsonLd = {
+                        "@context": "https://schema.org",
+                        "@type": "CollectionPage",
+                        "name": "Jus Fishy Seafood Stories",
+                        "description": "A collection of articles about Caribbean seafood, BBQ salmon, and catering in Brooklyn.",
+                        "url": "https://www.jusfishyandbeyond.com/stories",
+                        "hasPart": posts.map(function (post) { return ({
+                            "@type": "BlogPosting",
+                            "headline": post.title,
+                            "url": "https://www.jusfishyandbeyond.com/stories/" + post.slug.current
+                        }); })
+                    };
+                    return [2 /*return*/, (React.createElement("div", { className: "bg-white min-h-screen p-6 md:p-20 pb-40" },
+                            React.createElement("script", { type: "application/ld+json", dangerouslySetInnerHTML: { __html: JSON.stringify(jsonLd) } }),
+                            React.createElement("header", { className: "max-w-6xl mx-auto mb-20" },
+                                React.createElement("h1", { className: "text-7xl font-serif text-[#1B4D3E] mb-6 border-b border-stone-100 pb-10" },
+                                    "Stories",
+                                    React.createElement("span", { className: "text-[#A8B475]" }, ".")),
+                                React.createElement("p", { className: "text-stone-400 text-xs tracking-[0.3em] uppercase font-bold" }, "The Craft \u2022 The Culture \u2022 The Catch")),
+                            React.createElement("div", { className: "grid grid-cols-1 md:grid-cols-2 gap-x-16 gap-y-24 max-w-6xl mx-auto" }, posts.map(function (post) { return (React.createElement("article", { key: post._id, className: "group flex flex-col items-start" },
+                                React.createElement(link_1["default"], { href: "/stories/" + post.slug.current, className: "w-full" },
+                                    React.createElement("div", { className: "overflow-hidden rounded-[2.5rem] bg-stone-100 aspect-video mb-8 shadow-sm group-hover:shadow-md transition-all duration-500" },
+                                        React.createElement("div", { className: "w-full h-full bg-[#1B4D3E]/5 flex items-center justify-center group-hover:scale-105 transition-transform duration-700" },
+                                            React.createElement("span", { className: "text-[10px] font-black tracking-widest text-[#1B4D3E]/20 uppercase" }, "TyWebStudio Engine"))),
+                                    React.createElement("header", null,
+                                        React.createElement("time", { dateTime: post._createdAt, className: "text-[10px] font-black tracking-[0.4em] text-[#A8B475] uppercase mb-4 block" }, new Date(post._createdAt).toLocaleDateString('en-US', {
+                                            month: 'long',
+                                            day: 'numeric',
+                                            year: 'numeric'
+                                        })),
+                                        React.createElement("h2", { className: "text-4xl font-serif italic text-jusBlack group-hover:text-[#1B4D3E] transition-colors leading-tight mb-4" }, post.title)),
+                                    React.createElement("p", { className: "text-stone-500 text-sm leading-relaxed mb-6 line-clamp-3" }, post.description),
+                                    React.createElement("div", { className: "flex items-center gap-4 text-[10px] font-black tracking-widest text-[#1B4D3E] uppercase" },
+                                        React.createElement("span", null, "Read Story"),
+                                        React.createElement("div", { className: "h-[1px] w-8 bg-[#A8B475] group-hover:w-16 transition-all duration-500" }))))); }))))];
             }
         });
     });
