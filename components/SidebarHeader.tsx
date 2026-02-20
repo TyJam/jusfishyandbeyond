@@ -8,7 +8,7 @@ import { Instagram, MapPin, X } from "lucide-react";
 import LogoImage from "../public/jus-fishy-seafood-restaurant-brooklyn-flatbush.jpg"; 
 
 const navLinks = [
-  { name: "MENUS", href: "/menu" },
+  { name: "MENU", href: "/menu" },
   { name: "ABOUT", href: "/about" },
   { name: "CONTACT", href: "/contact" },
   { name: "CATERING", href: "/catering" },
