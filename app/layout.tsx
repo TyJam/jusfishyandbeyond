@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import Link from "next/link";
 import "./globals.css";
 import SidebarHeader from "@/components/SidebarHeader";
 
@@ -26,9 +27,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
            
            {/* TOP RIGHT ORDER BUTTON - Visible on Desktop only to keep mobile clean */}
            <div className="hidden md:block absolute top-10 right-10 z-40">
-              <button className="bg-[#1B4D3E] text-white px-8 py-3 rounded-none text-[10px] font-black tracking-widest uppercase hover:bg-black transition-all shadow-xl">
-                Order Online
-              </button>
+             <Link
+  href="https://order.online/business/jus-fishy-and-beyond-351168" 
+  target="_blank" 
+  rel="noopener noreferrer"
+  className="bg-[#1B4D3E] text-white px-8 py-3 rounded-none text-[10px] font-black tracking-widest uppercase hover:bg-black transition-all shadow-xl inline-block"
+>
+  Order Online
+</Link>
            </div>
            
            {/* SCROLLABLE CONTENT AREA (Fixed Vertical Spacing) */}

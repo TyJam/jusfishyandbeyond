@@ -1,6 +1,7 @@
 "use client"; // Required for animations
 import Image from "next/image";
 import { motion } from "framer-motion";
+import Link from "next/link";
 
 export default function Home() {
   return (
@@ -46,9 +47,12 @@ export default function Home() {
               while raising your environmental awareness. Our mission is to be part of the solution 
               so that one day we can all eat ethically.
             </p>
-            <button className="bg-[#1B4D3E] text-white px-8 py-4 text-[10px] font-black tracking-widest uppercase hover:bg-white hover:text-black transition-all">
-              Explore the Menu
-            </button>
+           <Link 
+  href="/menu" 
+  className="bg-[#1B4D3E] text-white px-8 py-4 text-[10px] font-black tracking-widest uppercase hover:bg-white hover:text-black transition-all inline-block shadow-lg"
+>
+  Explore the Menu
+</Link>
           </motion.div>
 
           {/* VISIT THE BAR SECTION */}
