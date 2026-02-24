@@ -9,11 +9,12 @@ export default function Home() {
       {/* 1. BACKGROUND IMAGE (SEO Optimized) */}
       <div className="absolute inset-0 z-0">
         <Image
-          src="/jus-fishy-seafood-restaurant-flatbush-brooklyn.jpg" 
+          src="/jus-fishy-seafood-restaurant-flatbush-brooklyn.webp" 
           alt="Jus Fishy & Beyond Seafood Restaurant storefront in Flatbush, Brooklyn"
           fill
           className="object-cover"
           priority
+         fetchPriority="high" // ADD THIS LINE for the browser to prioritize it
         />
         {/* Dark Overlay so text is 100% readable */}
         <div className="absolute inset-0 bg-black/60 backdrop-blur-[1px]" />
