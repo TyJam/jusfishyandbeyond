@@ -63,7 +63,9 @@ export default function Home() {
             transition={{ delay: 0.7 }}
             className="border-l border-[#A8B475]/30 pl-8 max-w-sm"
           >
-            <h3 className="text-[#A8B475] font-serif italic text-2xl mb-4">Visit the Bar</h3>
+            <h2 className="text-[#A8B475] font-serif italic text-2xl mb-4">
+  Visit the Bar
+</h2>
             <p className="text-stone-400 text-sm leading-relaxed mb-6">
               Located in the heart of Flatbush, Jus Fishy offers a cozy, modern atmosphere for your next seafood dinner. 
             </p>
@@ -78,7 +80,7 @@ export default function Home() {
         </div>
       </div>
 
-      {/* 3. ABSTRACT FISH GRAPHIC (SEO Optimized) */}
+      {/* 3. ABSTRACT FISH GRAPHIC (SEO Optimized) 
       <motion.div 
         initial={{ opacity: 0, rotate: -10 }}
         animate={{ opacity: 0.15, rotate: 0 }}
@@ -90,7 +92,7 @@ export default function Home() {
            className="w-[500px] h-auto grayscale invert" 
            alt="Jus Fishy abstract seafood graphic" 
          />
-      </motion.div>
+      </motion.div>*/}
     </div>
   );
 }

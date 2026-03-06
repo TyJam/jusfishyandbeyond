@@ -46,6 +46,7 @@ export default function SidebarHeader() {
         <button 
           onClick={() => setIsOpen(!isOpen)}
           className="flex flex-col gap-1.5 p-2 z-[110]"
+           aria-label="Open Navigation Menu" // <--- ADD THIS LINE
         >
           <motion.div 
             animate={isOpen ? { rotate: 45, y: 4 } : { rotate: 0, y: 0 }}
