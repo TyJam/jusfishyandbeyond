@@ -8,13 +8,55 @@ import "yet-another-react-lightbox/styles.css";
 // 1. DATA: THE CRAFT (FOOD)
 const foodImages = [
   { src: "/images/gallery/bbq-chicken-brooklyn-flatbush-jus-fishy.webp", alt: "Authentic BBQ Chicken Tray - Jus Fishy Brooklyn" },
-  { src: "/images/gallery/fry-salmon-jus-fishy-flatbush-brooklyn.jpg", alt: "Crispy Fried Salmon Platter" },
-  { src: "/images/gallery/fish-wings-brooklyn-flatbush.jpg", alt: "Signature Fish Wings - Flatbush Seafood" },
-  { src: "/images/gallery/jus-dine-meal-plate-salmon-shrimp.jpg", alt: "Seafood Combo: Salmon and Shrimp" },
-  { src: "/images/gallery/mac-n-cheese-brooklyn-flatbush.jpg", alt: "Caribbean Style Mac and Cheese" },
-  { src: "/images/gallery/snow-crab-brooklyn-jus-fishy.jpg", alt: "Snow Crab Legs - Jus Fishy Special" },
-];
-
+  { 
+    src: "/images/gallery/fry-salmon-jus-fishy-flatbush-brooklyn.jpg", 
+    alt: "Crispy Fried Salmon Platter at Jus Fishy" 
+  },
+  { 
+    src: "/images/gallery/fish-wings-brooklyn-flatbush.jpg", 
+    alt: "Signature Fish Wings - Flatbush Seafood specialty" 
+  },
+  { 
+    src: "/images/gallery/jus-dine-meal-plate-salmon-shrimp.jpg", 
+    alt: "Dine-in meal at Jus Fishy: Salmon and Shrimp combo" 
+  },
+  { 
+    src: "/images/gallery/mac-n-cheese-brooklyn-flatbush.jpg", 
+    alt: "Caribbean style Mac and Cheese side order" 
+  },
+  { 
+    src: "/images/gallery/snow-crab-brooklyn-jus-fishy.jpg", 
+    alt: "Snow Crab Caribbean style in Brooklyn" 
+  },
+  { 
+    src: "/images/gallery/seafood-boil-brooklyn-flatbush.jpg", 
+    alt: "Ultimate Seafood Boil - Flatbush flavor landmark" 
+  },
+  { 
+    src: "/images/gallery/jus-fishy-chef-tossing-fresh-lo-mein-brooklyn.jpg", 
+    alt: "Chef at Jus Fishy & Beyond tossing a fresh batch of vegetable lo mein in a wok" 
+  },
+  { 
+    src: "/images/gallery/jus-fishy-authentic-vegetable-lo-mein-flatbush.jpg", 
+    alt: "Close-up of steaming Caribbean-style vegetable lo mein prepared fresh in Brooklyn" 
+  },
+  { 
+    src: "/images/gallery/jus-fishy-crispy-crinkle-cut-fries-side-order.jpg", 
+    alt: "A basket of crispy, golden-brown crinkle-cut fries from the Jus Fishy kitchen" 
+  },
+  { 
+    src: "/images/gallery/jus-fishy-fried-jumbo-shrimp-seafood-basket.jpg", 
+    alt: "Signature jumbo shrimp, lightly battered and fried to perfection at Jus Fishy & Beyond" 
+  },
+  { 
+    src: "/images/gallery/jus-fishy-authentic-caribbean-curry-chicken-catering-tray.jpg", 
+    alt: "A large catering tray of slow-simmered Caribbean curry chicken for events in Brooklyn" 
+  },
+  { 
+    src: "/images/gallery/jus-fishy-fried-salmon-steak-fresh-garden-salad.jpg", 
+    alt: "A beautifully plated fried salmon steak served with a crisp garden salad and red onions" 
+  }
+]
 // 2. DATA: THE CULTURE (PRETTY FACES)
 const faceImages = [
   { src: "/images/prettyface/jus-family-affair-brooklyn-flatbush-restaurant.jpg", alt: "The Jus Fishy Family on Flatbush Ave" },
