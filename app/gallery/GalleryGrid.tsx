@@ -29,10 +29,6 @@ const foodImages = [
     alt: "Snow Crab Caribbean style in Brooklyn" 
   },
   { 
-    src: "/images/gallery/seafood-boil-brooklyn-flatbush.jpg", 
-    alt: "Ultimate Seafood Boil - Flatbush flavor landmark" 
-  },
-  { 
     src: "/images/gallery/jus-fishy-chef-tossing-fresh-lo-mein-brooklyn.jpg", 
     alt: "Chef at Jus Fishy & Beyond tossing a fresh batch of vegetable lo mein in a wok" 
   },
