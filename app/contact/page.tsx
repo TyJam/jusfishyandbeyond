@@ -1,87 +1,91 @@
-"use client";
-import { motion } from "framer-motion";
-import { MapPin, Phone, Instagram, Mail } from "lucide-react";
+import { Metadata } from "next";
+import { MapPin, Phone, Instagram } from "lucide-react";
+import ContactForm from "./ContactForm";
 
-// THIS IS THE PART THAT WAS MISSING OR WRONG:
+// 1. MASTER SEO METADATA
+export const metadata: Metadata = {
+  title: "Contact Us | Event Catering & Dine-In | Jus Fishy & Beyond Brooklyn",
+  description: "Book your next corporate event or private party at Jus Fishy & Beyond. Located at 1059 Flatbush Ave, Brooklyn. Authentic Caribbean seafood and soulful catering services.",
+  keywords: ["Catering Brooklyn", "Seafood Flatbush", "Corporate Lunch NYC", "Jus Fishy Phone Number", "Private Event Space Brooklyn"],
+  openGraph: {
+    title: "Connect with Jus Fishy & Beyond | Brooklyn Seafood Soul",
+    description: "Inquire about our premium catering services or visit our Flatbush location.",
+    url: "https://www.jusfishyandbeyond.com/contact",
+    images: [{ url: "/jus-fishy-seafood-restaurant-flatbush-brooklyn.webp" }]
+  }
+};
+
 export default function ContactPage() {
+  // 2. JSON-LD MASTER SCHEMA (The "Out of this World" SEO)
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "ContactPage",
+    "mainEntity": {
+      "@type": "Restaurant",
+      "name": "Jus Fishy & Beyond",
+      "image": "https://www.jusfishyandbeyond.com/jus-fishy-seafood-restaurant-flatbush-brooklyn.webp",
+      "telephone": "+1-347-442-1172",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "1059 Flatbush Ave",
+        "addressLocality": "Brooklyn",
+        "addressRegion": "NY",
+        "postalCode": "11226",
+        "addressCountry": "US"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 40.6482,
+        "longitude": -73.9571
+      },
+      "url": "https://www.jusfishyandbeyond.com/contact"
+    }
+  };
+
   return (
-    <div className="bg-[#fdfcf8] min-h-screen p-6 md:p-20 pb-40">
-      <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-20">
-        
-        {/* LEFT SIDE: BRAND INFO */}
-        <div>
-          <motion.p 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="text-[#A8B475] font-black tracking-[0.4em] text-[10px] uppercase mb-8"
-          >
-            Contact us
-          </motion.p>
-          <h1 className="text-6xl md:text-8xl font-serif text-[#1B4D3E] mb-12">Connect.</h1>
+    <main className="bg-[#fdfcf8] min-h-screen p-6 md:p-20 pb-40">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+
+      <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-24">
+        {/* INFO SIDE */}
+        <div className="animate-in fade-in slide-in-from-left-4 duration-1000">
+          <p className="text-[#A8B475] font-black tracking-[0.5em] text-[10px] uppercase mb-8">Get in touch</p>
+          <h1 className="text-6xl md:text-8xl font-serif text-[#1B4D3E] mb-12 italic">Connect.</h1>
           
-          <div className="space-y-10">
-            {/* ADDRESS */}
-            <div className="flex items-start gap-6 group">
-              <div className="p-4 bg-white rounded-full shadow-sm text-[#1B4D3E] group-hover:bg-[#1B4D3E] group-hover:text-white transition-all">
-                <MapPin size={20} />
-              </div>
+          <div className="space-y-12">
+            <div className="flex items-start gap-8 group">
+              <div className="p-5 bg-white rounded-full shadow-sm text-[#1B4D3E] group-hover:bg-[#1B4D3E] group-hover:text-white transition-all"><MapPin size={24} /></div>
               <div>
-                <p className="text-[10px] font-black tracking-widest text-[#A8B475] uppercase mb-1">Visit Brooklyn</p>
-                <p className="text-lg font-serif italic text-stone-800">1059 Flatbush Ave, Brooklyn, NY</p>
+                <h2 className="text-[10px] font-black tracking-widest text-[#A8B475] uppercase mb-2">The Landmark</h2>
+                <p className="text-xl font-serif italic text-stone-800 leading-none">1059 Flatbush Ave</p>
+                <p className="text-sm text-stone-400 mt-2 uppercase tracking-widest">Brooklyn, New York</p>
               </div>
             </div>
 
-            {/* PHONE */}
-            <div className="flex items-start gap-6 group">
-              <div className="p-4 bg-white rounded-full shadow-sm text-[#1B4D3E] group-hover:bg-[#1B4D3E] group-hover:text-white transition-all">
-                <Phone size={20} />
-              </div>
+            <div className="flex items-start gap-8 group">
+              <div className="p-5 bg-white rounded-full shadow-sm text-[#1B4D3E] group-hover:bg-[#1B4D3E] group-hover:text-white transition-all"><Phone size={24} /></div>
               <div>
-                <p className="text-[10px] font-black tracking-widest text-[#A8B475] uppercase mb-1">Call to Order</p>
-                <a href="tel:3474421172" className="text-lg font-serif italic text-stone-800 hover:text-[#A8B475] transition-all">347.442.1172</a>
+                <h2 className="text-[10px] font-black tracking-widest text-[#A8B475] uppercase mb-2">Catering Hotline</h2>
+                <a href="tel:3474421172" className="text-2xl font-serif italic text-stone-800 hover:text-[#A8B475] transition-all">347.442.1172</a>
               </div>
             </div>
 
-            {/* INSTAGRAM */}
-            <div className="flex items-start gap-6 group">
-              <div className="p-4 bg-white rounded-full shadow-sm text-[#1B4D3E] group-hover:bg-[#1B4D3E] group-hover:text-white transition-all">
-                <Instagram size={20} />
-              </div>
+            <div className="flex items-start gap-8 group">
+              <div className="p-5 bg-white rounded-full shadow-sm text-[#1B4D3E] group-hover:bg-[#1B4D3E] group-hover:text-white transition-all"><Instagram size={24} /></div>
               <div>
-                <p className="text-[10px] font-black tracking-widest text-[#A8B475] uppercase mb-1">Follow Soul</p>
-                <p className="text-lg font-serif italic text-stone-800">@jusfishyandbeyond</p>
+                <h2 className="text-[10px] font-black tracking-widest text-[#A8B475] uppercase mb-2">Join the Culture</h2>
+                <p className="text-xl font-serif italic text-stone-800 leading-none">@jusfishyandbeyond</p>
               </div>
             </div>
           </div>
         </div>
 
-        {/* RIGHT SIDE: THE INQUIRY ENGINE */}
-        <motion.div 
-          initial={{ opacity: 0, x: 20 }}
-          animate={{ opacity: 1, x: 0 }}
-          className="bg-white p-10 md:p-16 rounded-[3rem] shadow-sm border border-stone-100"
-        >
-          <h3 className="text-2xl font-serif italic text-[#1B4D3E] mb-10">Send a Message</h3>
-          <form className="space-y-8">
-            <div className="space-y-1">
-              <label className="text-[9px] font-black tracking-[0.2em] text-stone-300 uppercase">Your Name</label>
-              <input type="text" className="w-full border-b border-stone-100 py-2 outline-none focus:border-[#A8B475] text-sm font-medium uppercase" placeholder="Tyrone" />
-            </div>
-            <div className="space-y-1">
-              <label className="text-[9px] font-black tracking-[0.2em] text-stone-300 uppercase">Email Address</label>
-              <input type="email" className="w-full border-b border-stone-100 py-2 outline-none focus:border-[#A8B475] text-sm font-medium uppercase" placeholder="HELLO@TYWEBSTUDIO.COM" />
-            </div>
-            <div className="space-y-1">
-              <label className="text-[9px] font-black tracking-[0.2em] text-stone-300 uppercase">Message</label>
-              <textarea rows={3} className="w-full border-b border-stone-100 py-2 outline-none focus:border-[#A8B475] text-sm font-medium uppercase" placeholder="TELL US ABOUT YOUR EVENT" />
-            </div>
-            <button className="w-full bg-[#1B4D3E] text-white py-6 rounded-full font-black tracking-[0.5em] uppercase hover:bg-black transition-all shadow-lg">
-              Send Inquiry
-            </button>
-          </form>
-        </motion.div>
-
+        {/* FORM SIDE */}
+        <div className="bg-white p-10 md:p-16 rounded-[4rem] shadow-sm border border-stone-100 h-fit animate-in fade-in slide-in-from-right-4 duration-1000 delay-200">
+           <h3 className="text-3xl font-serif italic text-[#1B4D3E] mb-12">The Inquiry Engine</h3>
+           <ContactForm />
+        </div>
       </div>
-    </div>
+    </main>
   );
 }
