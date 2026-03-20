@@ -37,9 +37,14 @@ export default function SidebarHeader() {
 
         {/* ORDER BUTTON MIDDLE */}
         <div className="absolute left-1/2 -translate-x-1/2">
-          <button className="bg-[#1B4D3E] text-white px-4 py-2 rounded-md text-[9px] font-black tracking-widest uppercase shadow-sm">
-            Order Online
-          </button>
+         <Link
+      href="https://order.online/business/jus-fishy-and-beyond-351168" 
+      target="_blank" 
+      rel="noopener noreferrer"
+      className="bg-[#1B4D3E] text-white px-4 py-2 rounded-md text-[9px] font-black tracking-widest uppercase shadow-sm whitespace-nowrap active:scale-95 transition-transform"
+    >
+      Order Online
+    </Link>
         </div>
 
         {/* 2-LINE MENU RIGHT */}
