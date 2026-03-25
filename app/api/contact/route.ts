@@ -10,7 +10,7 @@ export async function POST(req: Request) {
 
     const data = await resend.emails.send({
       // IMPORTANT: Use your verified TyWebStudio domain
-      from: 'Jus Fishy Leads <contact@tywebstudio.com>', 
+      from: 'Jus Fishy Leads  <onboarding@resend.dev>',
       to: ['contact@tywebstudio.com'], 
       subject: `NEW CATERING INQUIRY: From Digital Flagship`,
       html: `
