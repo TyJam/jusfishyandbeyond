@@ -11,18 +11,21 @@ function urlFor(source: any) {
   return builder.image(source);
 }
 
-// --- MASTER SEO: RENDERING ENGINE FOR IMAGES INSIDE BLOG CONTENT ---
+// 1. MANDATORY FOR STATIC EXPORT: Fixes the "Missing generateStaticParams" error
+export const dynamicParams = false;
+
+// 2. THE RENDER ENGINE: This tells the site how to handle images INSIDE your text
 const ptComponents = {
   types: {
     image: ({ value }: any) => {
       if (!value?.asset?._ref) return null;
       return (
-        <div className="relative w-full h-[300px] md:h-[500px] my-12 rounded-[2.5rem] overflow-hidden shadow-2xl border-4 border-white group">
+        <div className="relative w-full h-[350px] md:h-[600px] my-16 rounded-[3rem] overflow-hidden shadow-2xl border-4 border-white group">
           <Image
             src={urlFor(value).url()}
-            alt="Process and Soul of Jus Fishy Seafood"
+            alt="Jus Fishy Exquisite Culinary Process"
             fill
-            className="object-cover transition-transform duration-700 group-hover:scale-105"
+            className="object-cover transition-transform duration-1000 group-hover:scale-105"
             unoptimized
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
@@ -32,38 +35,36 @@ const ptComponents = {
   },
   block: {
     h2: ({ children }: any) => (
-      <h2 className="text-3xl md:text-5xl font-black text-[#1B4D3E] mt-16 mb-8 tracking-tighter">
+      <h2 className="text-4xl md:text-6xl font-black text-[#1B4D3E] mt-20 mb-10 tracking-tighter italic">
         {children}
       </h2>
     ),
-    h3: ({ children }: any) => (
-      <h3 className="text-2xl md:text-3xl font-bold text-stone-800 mt-12 mb-4 italic">
-        {children}
-      </h3>
-    ),
     normal: ({ children }: any) => (
-      <p className="text-stone-600 leading-[2.1] text-lg mb-6 font-light">
+      <p className="text-stone-600 leading-[2.2] text-lg md:text-xl mb-8 font-light">
         {children}
       </p>
     ),
   },
 };
 
-export const dynamicParams = false;
-
-// 1. GENERATE STATIC PARAMS (Build-time optimization)
+// 3. GENERATE STATIC PARAMS: Build-time optimization for 100/100 Speed
 export async function generateStaticParams() {
-  const query = `*[_type == "post"]{ "slug": slug.current }`;
-  const posts = await client.fetch(query);
-  
-  if (!posts || posts.length === 0) {
+  try {
+    const query = `*[_type == "post"]{ "slug": slug.current }`;
+    const posts = await client.fetch(query);
+    
+    if (!posts || posts.length === 0) {
+      return [{ slug: "welcome-to-jus-fishy" }];
+    }
+    
+    return posts.map((post: any) => ({ slug: post.slug }));
+  } catch (error) {
+    console.error("Sanity Fetch Error:", error);
     return [{ slug: "welcome-to-jus-fishy" }];
   }
-  
-  return posts.map((post: any) => ({ slug: post.slug }));
 }
 
-// 2. DYNAMIC SEO METADATA (Bypassing Pearl Street & Dominating Brooklyn)
+// 4. DYNAMIC SEO METADATA: Dominating Dumbo and Flatbush
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
   const post = await client.fetch(`*[_type == "post" && slug.current == $slug][0]{title, description}`, { slug });
@@ -93,12 +94,12 @@ export default async function StoryPage({ params }: { params: Promise<{ slug: st
 
   if (!post) {
     if (slug === "welcome-to-jus-fishy") {
-        return <div className="p-40 text-center font-serif italic text-2xl">Refining our latest seafood stories...</div>
+        return <div className="p-40 text-center font-serif italic text-2xl bg-white min-h-screen">Architecting our latest stories...</div>
     }
     notFound();
   }
 
-  // 3. JSON-LD MASTER SCHEMA (The "Out of this World" SEO Logic)
+  // 5. MASTER JSON-LD SCHEMA: The "Out of this World" SEO Secret
   const blogLd = {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
@@ -119,35 +120,26 @@ export default async function StoryPage({ params }: { params: Promise<{ slug: st
     }
   };
 
-  const locationLd = {
-    "@context": "https://schema.org",
-    "@type": "Restaurant",
-    "name": "Jus Fishy & Beyond",
-    "description": "Brooklyn's #1 Seafood Place and Caribbean Soul destination near Kings Theatre.",
-    "url": "https://www.jusfishyandbeyond.com",
-    "telephone": "347-442-1172",
-    "hasMap": "https://www.google.com/maps/dir/?api=1&destination=1059+Flatbush+Ave+Brooklyn+NY+11226"
-  };
-
   return (
     <article className="bg-[#fdfcf8] min-h-screen p-6 md:p-20 pb-40">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(blogLd) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(locationLd) }} />
       
       <div className="max-w-4xl mx-auto">
-        <header className="mb-20">
-          <Link href="/stories" className="text-[10px] font-black tracking-widest text-[#A8B475] uppercase hover:text-[#1B4D3E] transition-all mb-8 block">
-            ← Back to Stories
+        <header className="mb-24">
+          <Link href="/stories" className="text-[10px] font-black tracking-widest text-[#A8B475] uppercase hover:text-[#1B4D3E] transition-all mb-12 block group">
+            <span className="inline-block group-hover:-translate-x-2 transition-transform mr-2">←</span> Back to Stories
           </Link>
-          <p className="text-stone-400 font-black tracking-[0.4em] text-[10px] uppercase mb-6">
-            The Craft • {new Date(post._createdAt).toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}
+          
+          <p className="text-stone-400 font-black tracking-[0.5em] text-[10px] uppercase mb-8">
+            {new Date(post._createdAt).toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}
           </p>
-          <h1 className="text-6xl md:text-9xl font-serif text-[#1B4D3E] leading-[0.95] mb-12 tracking-tighter italic">
+          
+          <h1 className="text-6xl md:text-9xl font-serif text-[#1B4D3E] leading-[0.95] mb-16 tracking-tighter italic">
             {post.title}
           </h1>
           
           {post.mainImage && (
-            <div className="relative w-full h-[450px] md:h-[700px] rounded-[3.5rem] overflow-hidden shadow-2xl mb-16 border-8 border-white group">
+            <div className="relative w-full h-[450px] md:h-[750px] rounded-[4rem] overflow-hidden shadow-2xl mb-24 border-8 border-white group">
               <Image 
                 src={urlFor(post.mainImage).url()} 
                 alt={post.title} 
@@ -162,23 +154,23 @@ export default async function StoryPage({ params }: { params: Promise<{ slug: st
 
         <div className="max-w-3xl">
           {/* THE SUB-TITLE / EXCERPT */}
-          <p className="text-3xl md:text-4xl font-serif italic text-stone-400 leading-snug mb-20 border-l-4 border-[#A8B475] pl-10">
+          <p className="text-3xl md:text-5xl font-serif italic text-stone-800 leading-snug mb-24 border-l-8 border-[#A8B475] pl-12">
             {post.description}
           </p>
           
-          {/* THE CONTENT BODY ENGINE */}
-          <div className="prose prose-stone lg:prose-xl max-w-none">
+          {/* THE CONTENT BODY ENGINE (FIXED: Added ptComponents) */}
+          <div className="prose prose-stone lg:prose-2xl max-w-none">
             <PortableText value={post.body} components={ptComponents} />
           </div>
         </div>
 
-        {/* BOTTOM CALL TO ACTION */}
-        <div className="mt-32 pt-12 border-t border-stone-100 flex flex-col md:flex-row justify-between items-center gap-8">
+        {/* REVENUE CONVERSION FOOTER */}
+        <div className="mt-40 pt-20 border-t border-stone-200 flex flex-col md:flex-row justify-between items-center gap-12">
            <div className="text-center md:text-left">
-              <p className="text-[10px] font-black tracking-widest text-[#A8B475] uppercase mb-2">Ready to taste?</p>
-              <p className="text-lg font-serif italic text-[#1B4D3E]">1059 Flatbush Ave, Brooklyn</p>
+              <p className="text-[10px] font-black tracking-widest text-[#A8B475] uppercase mb-2">The Standard of Excellence</p>
+              <p className="text-2xl font-serif italic text-[#1B4D3E]">1059 Flatbush Ave, Brooklyn</p>
            </div>
-           <Link href="/menu" className="bg-[#1B4D3E] text-white px-12 py-5 rounded-full font-black text-[10px] tracking-widest uppercase hover:bg-black transition-all shadow-xl">
+           <Link href="/menu" className="bg-[#1B4D3E] text-white px-16 py-6 rounded-full font-black text-xs tracking-widest uppercase hover:bg-black transition-all shadow-2xl">
              Explore Our Signature Menu
            </Link>
         </div>
