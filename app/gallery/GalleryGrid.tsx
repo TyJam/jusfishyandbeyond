@@ -51,7 +51,22 @@ const foodImages = [
   { 
     src: "/images/gallery/jus-fishy-fried-salmon-steak-fresh-garden-salad.jpg", 
     alt: "A beautifully plated fried salmon steak served with a crisp garden salad and red onions" 
+  },
+ { 
+    src: "/images/gallery/jus-fishy-signature-salmon-rice-and-peas-brooklyn.jpg", 
+    alt: "A signature Jus Fishy meal featuring perfectly seasoned salmon, traditional rice and peas, and roasted sweet potato chunks." 
+  },
+  // 5. THE REVENUE ENGINE (Meal Prep)
+  { 
+    src: "/images/gallery/jus-fishy-healthy-caribbean-meal-prep-services-flatbush.jpg", 
+    alt: "Three freshly prepared Caribbean meal prep containers from Jus Fishy & Beyond, featuring vegetable rice and sautéed greens." 
+  },
+  // 6. THE COMFORT CLASSIC (Wings & Fries)
+  { 
+    src: "/images/gallery/jus-fishy-crispy-chicken-wings-and-sweet-potato-fries-brooklyn.jpg", 
+    alt: "Crispy, hand-breaded chicken wings served with golden sweet potato fries and steamed broccoli at Jus Fishy & Beyond." 
   }
+
 ]
 // 2. DATA: THE CULTURE (PRETTY FACES)
 const faceImages = [
