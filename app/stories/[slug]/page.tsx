@@ -14,22 +14,22 @@ function urlFor(source: any) {
 // 1. MANDATORY FOR STATIC EXPORT: Fixes the "Missing generateStaticParams" error
 export const dynamicParams = false;
 
-// 2. THE RENDER ENGINE: This tells the site how to handle images INSIDE your text
+// 2. THE MASTER RENDER ENGINE: Handles images and links INSIDE the blog text
 const ptComponents = {
   types: {
     image: ({ value }: any) => {
       if (!value?.asset?._ref) return null;
       return (
-        <div className="relative w-full h-[350px] md:h-[600px] my-16 rounded-[3rem] overflow-hidden shadow-2xl border-4 border-white group">
+        <figure className="relative w-full h-[350px] md:h-[600px] my-16 rounded-[3rem] overflow-hidden shadow-2xl border-4 border-white group">
           <Image
             src={urlFor(value).url()}
-            alt="Jus Fishy Exquisite Culinary Process"
+            alt="Exquisite Culinary Process at Jus Fishy & Beyond"
             fill
             className="object-cover transition-transform duration-1000 group-hover:scale-105"
             unoptimized
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
-        </div>
+        </figure>
       );
     },
   },
@@ -40,10 +40,24 @@ const ptComponents = {
       </h2>
     ),
     normal: ({ children }: any) => (
-      <p className="text-stone-600 leading-[2.2] text-lg md:text-xl mb-8 font-light">
+      <p className="text-stone-600 leading-[2.2] text-lg md:text-xl mb-8 font-light break-words">
         {children}
       </p>
     ),
+  },
+  marks: {
+    link: ({ children, value }: any) => {
+      return (
+        <a 
+          href={value.href} 
+          className="text-[#A8B475] underline decoration-dotted underline-offset-4 hover:text-[#1B4D3E] transition-colors"
+          target="_blank" 
+          rel="noopener"
+        >
+          {children}
+        </a>
+      );
+    },
   },
 };
 
@@ -64,7 +78,7 @@ export async function generateStaticParams() {
   }
 }
 
-// 4. DYNAMIC SEO METADATA: Dominating Dumbo and Flatbush
+// 4. ADVANCED SEO METADATA: Bypassing Competitors & Dominating Brooklyn
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
   const post = await client.fetch(`*[_type == "post" && slug.current == $slug][0]{title, description}`, { slug });
@@ -72,8 +86,9 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   if (!post) return { title: "Story Not Found | TyWebStudio" };
   
   return {
-    title: `${post.title} | Jus Fishy & Beyond Brooklyn`,
+    title: `${post.title} | Authentic Brooklyn Seafood | Jus Fishy & Beyond`,
     description: post.description,
+    alternates: { canonical: `/stories/${slug}` },
     openGraph: {
       title: post.title,
       description: post.description,
@@ -87,7 +102,7 @@ export default async function StoryPage({ params }: { params: Promise<{ slug: st
   const { slug } = await params;
   
   const query = `*[_type == "post" && slug.current == $slug][0]{
-    title, description, mainImage, body, _createdAt
+    title, description, mainImage, body, _createdAt, _updatedAt
   }`;
   
   const post = await client.fetch(query, { slug });
@@ -99,13 +114,15 @@ export default async function StoryPage({ params }: { params: Promise<{ slug: st
     notFound();
   }
 
-  // 5. MASTER JSON-LD SCHEMA: The "Out of this World" SEO Secret
-  const blogLd = {
+  // 5. MASTER JSON-LD SCHEMA: The "Out of this World" SEO Logic
+  const jsonLd = {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
     "headline": post.title,
     "description": post.description,
     "datePublished": post._createdAt,
+    "dateModified": post._updatedAt,
+    "image": "https://www.jusfishyandbeyond.com/jus-fishy-seafood-restaurant-flatbush-brooklyn.webp",
     "author": { "@type": "Organization", "name": "TyWebStudio Digital News" },
     "publisher": {
       "@type": "Restaurant",
@@ -122,7 +139,8 @@ export default async function StoryPage({ params }: { params: Promise<{ slug: st
 
   return (
     <article className="bg-[#fdfcf8] min-h-screen p-6 md:p-20 pb-40">
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(blogLd) }} />
+      {/* Inject Structured Data */}
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       
       <div className="max-w-4xl mx-auto">
         <header className="mb-24">
@@ -131,7 +149,7 @@ export default async function StoryPage({ params }: { params: Promise<{ slug: st
           </Link>
           
           <p className="text-stone-400 font-black tracking-[0.5em] text-[10px] uppercase mb-8">
-            {new Date(post._createdAt).toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}
+            The Craft • {new Date(post._createdAt).toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}
           </p>
           
           <h1 className="text-6xl md:text-9xl font-serif text-[#1B4D3E] leading-[0.95] mb-16 tracking-tighter italic">
@@ -158,7 +176,7 @@ export default async function StoryPage({ params }: { params: Promise<{ slug: st
             {post.description}
           </p>
           
-          {/* THE CONTENT BODY ENGINE (FIXED: Added ptComponents) */}
+          {/* THE CONTENT BODY ENGINE */}
           <div className="prose prose-stone lg:prose-2xl max-w-none">
             <PortableText value={post.body} components={ptComponents} />
           </div>
