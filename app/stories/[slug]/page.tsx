@@ -11,7 +11,7 @@ function urlFor(source: any) {
   return builder.image(source);
 }
 
-// 1. MANDATORY FOR STATIC EXPORT: Fixes the "Missing generateStaticParams" error
+// 1. MANDATORY FOR STATIC EXPORT
 export const dynamicParams = false;
 
 // 2. THE MASTER RENDER ENGINE: Handles images and links INSIDE the blog text
@@ -66,19 +66,14 @@ export async function generateStaticParams() {
   try {
     const query = `*[_type == "post"]{ "slug": slug.current }`;
     const posts = await client.fetch(query);
-    
-    if (!posts || posts.length === 0) {
-      return [{ slug: "welcome-to-jus-fishy" }];
-    }
-    
+    if (!posts || posts.length === 0) return [{ slug: "welcome-to-jus-fishy" }];
     return posts.map((post: any) => ({ slug: post.slug }));
   } catch (error) {
-    console.error("Sanity Fetch Error:", error);
     return [{ slug: "welcome-to-jus-fishy" }];
   }
 }
 
-// 4. ADVANCED SEO METADATA: Bypassing Competitors & Dominating Brooklyn
+// 4. ADVANCED SEO METADATA
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
   const post = await client.fetch(`*[_type == "post" && slug.current == $slug][0]{title, description}`, { slug });
@@ -122,7 +117,6 @@ export default async function StoryPage({ params }: { params: Promise<{ slug: st
     "description": post.description,
     "datePublished": post._createdAt,
     "dateModified": post._updatedAt,
-    "image": "https://www.jusfishyandbeyond.com/jus-fishy-seafood-restaurant-flatbush-brooklyn.webp",
     "author": { "@type": "Organization", "name": "TyWebStudio Digital News" },
     "publisher": {
       "@type": "Restaurant",
@@ -139,7 +133,6 @@ export default async function StoryPage({ params }: { params: Promise<{ slug: st
 
   return (
     <article className="bg-[#fdfcf8] min-h-screen p-6 md:p-20 pb-40">
-      {/* Inject Structured Data */}
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       
       <div className="max-w-4xl mx-auto">
@@ -171,18 +164,16 @@ export default async function StoryPage({ params }: { params: Promise<{ slug: st
         </header>
 
         <div className="max-w-3xl">
-          {/* THE SUB-TITLE / EXCERPT */}
           <p className="text-3xl md:text-5xl font-serif italic text-stone-800 leading-snug mb-24 border-l-8 border-[#A8B475] pl-12">
             {post.description}
           </p>
           
-          {/* THE CONTENT BODY ENGINE */}
           <div className="prose prose-stone lg:prose-2xl max-w-none">
+            {/* THIS IS THE FINAL RENDERER */}
             <PortableText value={post.body} components={ptComponents} />
           </div>
         </div>
 
-        {/* REVENUE CONVERSION FOOTER */}
         <div className="mt-40 pt-20 border-t border-stone-200 flex flex-col md:flex-row justify-between items-center gap-12">
            <div className="text-center md:text-left">
               <p className="text-[10px] font-black tracking-widest text-[#A8B475] uppercase mb-2">The Standard of Excellence</p>
