@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
-import { writeClient } from "@/lib/sanity";
+import { writeClient } from "@/lib/sanity"; // Used for public image upload
 import { motion } from "framer-motion";
 
 export default function AdminCreatePost() {
@@ -22,6 +22,7 @@ export default function AdminCreatePost() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
     if (!formData.title || !formData.body || !imageFile || !formData.slug) {
         alert("All fields including Image and Slug are required.");
         return;
@@ -29,12 +30,13 @@ export default function AdminCreatePost() {
     setLoading(true);
 
     try {
-      // 2. UPLOAD IMAGE TO CLOUD
+      // 2. UPLOAD IMAGE TO CLOUD ASSETS
+      // Note: writeClient here needs the token in .env.local to work on localhost
       const imageAsset = await writeClient.assets.upload('image', imageFile, {
         filename: imageFile.name,
       });
 
-      // 3. ARCHITECT THE DATA (Fixed Type Mismatch)
+      // 3. ARCHITECT THE DATA (Paragraph Splitting)
       const bodyBlocks: any[] = formData.body
         .split('\n')
         .filter(p => p.trim() !== "")
@@ -43,6 +45,7 @@ export default function AdminCreatePost() {
           children: [{ _type: 'span', text: para.trim() }],
         }));
 
+      // 4. THE MASTER BACKLINK
       if (includeBacklink) {
         bodyBlocks.push({
           _type: 'block',
@@ -76,14 +79,25 @@ export default function AdminCreatePost() {
         body: bodyBlocks,
       };
 
-      await writeClient.create(doc);
+      // 5. CALL THE SECURE API ROUTE
+      const res = await fetch('/api/deploy', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(doc),
+      });
+
+      if (res.ok) {
+          alert("🚀 SUCCESS: Digital Asset Synchronized & Live!");
+          setFormData({ title: "", slug: "", description: "", body: "" });
+          setImageFile(null);
+      } else {
+          const errData = await res.json();
+          alert(`Deployment Failed: ${errData.error}`);
+      }
       
-      alert("🚀 SUCCESS: Digital Asset Deployed!");
-      setFormData({ title: "", slug: "", description: "", body: "" });
-      setImageFile(null);
     } catch (err) {
       console.error("System Error:", err);
-      alert("Deployment Failed. Check Sanity Write Token Permissions.");
+      alert("System Error. Check Console.");
     } finally {
       setLoading(false);
     }
@@ -105,13 +119,17 @@ export default function AdminCreatePost() {
         
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="bg-white/5 p-8 md:p-16 rounded-[4rem] backdrop-blur-3xl border border-white/10 shadow-2xl">
           <form onSubmit={handleSubmit} className="space-y-12">
-            {/* IMAGE UPLOAD */}
+            
+            {/* IMAGE UPLOAD AREA */}
             <div className="group space-y-4">
               <label className="text-[10px] font-black tracking-widest text-[#A8B475] uppercase">Featured Visual Asset</label>
               <label className="flex flex-col items-center justify-center w-full h-44 border-2 border-dashed border-white/10 rounded-[3rem] cursor-pointer hover:bg-white/5 hover:border-[#A8B475]/40 transition-all group">
-                <p className="text-sm text-stone-400 font-light group-hover:text-white">
-                  {imageFile ? `Ready: ${imageFile.name}` : "Drop or select culinary photography"}
-                </p>
+                <div className="text-center p-6">
+                  <p className="text-sm text-stone-400 font-light group-hover:text-white">
+                    {imageFile ? `Ready: ${imageFile.name}` : "Drop or select culinary photography"}
+                  </p>
+                  <p className="text-[8px] text-stone-600 mt-2 uppercase tracking-widest">Supports JPG, PNG, WEBP</p>
+                </div>
                 <input type="file" className="hidden" accept="image/*" onChange={(e) => setImageFile(e.target.files ? e.target.files[0] : null)} />
               </label>
             </div>
@@ -128,16 +146,20 @@ export default function AdminCreatePost() {
             </div>
 
             <div className="space-y-2 text-left">
-                <label className="text-[10px] font-black tracking-widest text-stone-400 uppercase">Google Snippet</label>
+                <label className="text-[10px] font-black tracking-widest text-stone-400 uppercase">Google Snippet (Meta Description)</label>
                 <textarea value={formData.description} onChange={(e) => setFormData({...formData, description: e.target.value})} rows={2} className="w-full bg-transparent border-b border-white/20 py-4 outline-none focus:border-[#A8B475] text-xs leading-relaxed" />
             </div>
 
             <div className="space-y-2 text-left">
-                <label className="text-[10px] font-black tracking-widest text-stone-400 uppercase">The Narrative</label>
-                <textarea value={formData.body} onChange={(e) => setFormData({...formData, body: e.target.value})} placeholder="Describe the soul of the dish..." rows={12} className="w-full bg-transparent border-b border-white/10 py-4 outline-none focus:border-[#A8B475] text-sm font-light leading-[2]" />
+                <label className="text-[10px] font-black tracking-widest text-stone-400 uppercase">The Narrative (Soul of the Dish)</label>
+                <textarea value={formData.body} onChange={(e) => setFormData({...formData, body: e.target.value})} placeholder="Describe the story here. Use Enters for new paragraphs..." rows={12} className="w-full bg-transparent border-b border-white/10 py-4 outline-none focus:border-[#A8B475] text-sm font-light leading-[2]" />
             </div>
             
-            <button type="submit" disabled={loading} className="w-full bg-[#A8B475] text-jusGreen py-8 rounded-full font-black tracking-[0.6em] uppercase hover:bg-white hover:text-black transition-all shadow-xl">
+            <button 
+                type="submit" 
+                disabled={loading} 
+                className="w-full bg-[#A8B475] text-jusGreen py-8 rounded-full font-black tracking-[0.6em] uppercase hover:bg-white hover:text-black transition-all shadow-xl disabled:opacity-50"
+            >
                 {loading ? "COMMUNICATING WITH CLOUD..." : "LAUNCH TO GOOGLE ENGINE"}
             </button>
           </form>
