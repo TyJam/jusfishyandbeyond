@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import { Instagram, MapPin } from "lucide-react";
-import LogoImage from "../../public/jus-fishy-seafood-restaurant-brooklyn-flatbush.jpg"; 
+import LogoImage from "../public/jus-fishy-seafood-restaurant-brooklyn-flatbush.jpg"; 
 
 const navLinks = [
   { name: "MENU", href: "/menu" },
