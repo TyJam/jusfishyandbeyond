@@ -27,7 +27,7 @@ export default function SidebarHeader() {
         {/* LOGO LEFT */}
         <Link href="/" onClick={() => setIsOpen(false)} className="w-10 h-10 rounded-full bg-[#1B4D3E] flex items-center justify-center overflow-hidden">
           <Image 
-            src={LogoImage} 
+            src={LogoImage}
             alt="Jus Fishy Logo" 
             width={40} 
             height={40} 
@@ -35,7 +35,7 @@ export default function SidebarHeader() {
           />
         </Link>
 
-        {/* ORDER BUTTON MIDDLE (Centered) */}
+        {/* ORDER BUTTON MIDDLE */}
         <div className="absolute left-1/2 -translate-x-1/2">
           <Link
             href="https://order.online/business/jus-fishy-and-beyond-351168" 
@@ -68,14 +68,14 @@ export default function SidebarHeader() {
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            initial={{ opacity: 0, x: "100%" }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: "100%" }}
+            initial={{ x: "100%" }}
+            animate={{ x: 0 }}
+            exit={{ x: "100%" }}
             transition={{ type: "spring", damping: 25, stiffness: 200 }}
             className="fixed inset-0 bg-white z-[90] flex flex-col md:hidden"
           >
             {/* Nav Links */}
-            <nav className="flex-1 flex flex-col items-center justify-center gap-8">
+            <nav className="flex-1 flex flex-col items-center justify-center gap-8 pt-20">
               {navLinks.map((link) => (
                 <Link
                   key={link.name}
@@ -88,12 +88,31 @@ export default function SidebarHeader() {
               ))}
             </nav>
 
-            {/* AGENCY CREDIT IN MOBILE MENU (Prevents overcrowding bottom bar) */}
-            <div className="p-12 border-t border-stone-50 bg-[#fdfcf8] flex flex-col items-center gap-6 text-center">
-               <p className="text-[10px] font-black tracking-[0.3em] text-stone-300">BROOKLYN SOUL • 1059 FLATBUSH AVE</p>
+            {/* MOBILE MENU FOOTER (With requested Icons) */}
+            <div className="p-12 border-t border-stone-50 bg-[#fdfcf8] flex flex-col items-center gap-8">
+               
+               {/* LOCATION & INSTAGRAM ICONS (The Fix) */}
+               <div className="flex gap-12 items-center">
+                  <a 
+                    href="https://www.google.com/maps/dir/?api=1&destination=1059+Flatbush+Ave+Brooklyn+NY+11226" 
+                    target="_blank" 
+                    rel="noopener"
+                    className="text-[#1B4D3E]"
+                  >
+                    <MapPin size={24} />
+                  </a>
+                  <a 
+                    href="https://www.instagram.com/jusfishy_and_beyond/" 
+                    target="_blank" 
+                    rel="noopener"
+                    className="text-[#1B4D3E]"
+                  >
+                    <Instagram size={24} />
+                  </a>
+               </div>
                
                <Link href="https://tywebstudio.com" target="_blank" className="group flex flex-col items-center gap-1">
-                  <span className="text-[7px] font-black tracking-[0.4em] text-stone-300 group-hover:text-[#1B4D3E] transition-colors">
+                  <span className="text-[7px] font-black tracking-[0.4em] text-stone-300">
                     DIGITAL ARCHITECTURE BY
                   </span>
                   <span className="text-[10px] font-black tracking-[0.2em] text-[#1B4D3E] border-b border-[#A8B475]">
@@ -111,7 +130,7 @@ export default function SidebarHeader() {
           <Link href="/" className="group">
             <div className="w-12 h-12 rounded-full bg-[#1B4D3E] flex items-center justify-center overflow-hidden group-hover:scale-110 transition-transform shadow-md">
               <Image 
-                src={LogoImage} 
+                src="/jus-fishy-seafood-restaurant-brooklyn-flatbush.jpg" 
                 alt="Jus Fishy"
                 width={50}
                 height={50}
@@ -121,7 +140,6 @@ export default function SidebarHeader() {
           </Link>
         </div>
 
-        {/* Desktop Rotated Navigation */}
         <nav className="flex flex-col gap-12 flex-1 justify-center">
           {navLinks.map((link) => {
             const isActive = pathname === link.href;
@@ -150,7 +168,6 @@ export default function SidebarHeader() {
           })}
         </nav>
 
-        {/* Desktop Socials & Branded Credit */}
         <div className="flex flex-col items-center gap-10">
           <Link href="https://tywebstudio.com" target="_blank" className="group">
              <span 
