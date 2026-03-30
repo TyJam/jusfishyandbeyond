@@ -28,7 +28,7 @@ export default function SidebarHeader() {
         <Link href="/" onClick={() => setIsOpen(false)} className="w-10 h-10 rounded-full bg-[#1B4D3E] flex items-center justify-center overflow-hidden">
           <Image 
             src={LogoImage}
-            alt="Jus Fishy Logo" 
+              alt="Jus Fishy & Beyond - The Best Modern Seafood Restaurant and Bar in Flatbush, Brooklyn. Authentic Caribbean soul food and professional catering services."
             width={40} 
             height={40} 
             className="object-cover"
