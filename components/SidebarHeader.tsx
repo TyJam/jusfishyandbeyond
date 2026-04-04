@@ -5,7 +5,6 @@ import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import { Instagram, MapPin } from "lucide-react";
-import LogoImage from "../public/jus-fishy-seafood-restaurant-brooklyn-flatbush.jpg"; 
 
 const navLinks = [
   { name: "MENU", href: "/menu" },
@@ -27,8 +26,8 @@ export default function SidebarHeader() {
         {/* LOGO LEFT */}
         <Link href="/" onClick={() => setIsOpen(false)} className="w-10 h-10 rounded-full bg-[#1B4D3E] flex items-center justify-center overflow-hidden">
           <Image 
-            src={LogoImage}
-              alt="Jus Fishy & Beyond - The Best Modern Seafood Restaurant and Bar in Flatbush, Brooklyn. Authentic Caribbean soul food and professional catering services."
+            src="/jus-fishy-seafood-restaurant-brooklyn-flatbush.jpg" 
+            alt="Jus Fishy & Beyond - The Best Modern Seafood Restaurant and Bar in Flatbush, Brooklyn. Authentic Caribbean soul food and professional catering services."
             width={40} 
             height={40} 
             className="object-cover"
@@ -65,12 +64,12 @@ export default function SidebarHeader() {
       </header>
 
       {/* --- MOBILE FULL-SCREEN OVERLAY --- */}
-      <AnimatePresence>
+      <AnimatePresence mode="wait">
         {isOpen && (
           <motion.div
-            initial={{ x: "100%" }}
-            animate={{ x: 0 }}
-            exit={{ x: "100%" }}
+            initial={{ opacity: 0, x: "100%" }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: "100%" }}
             transition={{ type: "spring", damping: 25, stiffness: 200 }}
             className="fixed inset-0 bg-white z-[90] flex flex-col md:hidden"
           >
@@ -88,10 +87,8 @@ export default function SidebarHeader() {
               ))}
             </nav>
 
-            {/* MOBILE MENU FOOTER (With requested Icons) */}
+            {/* MOBILE MENU FOOTER (Branding visible here) */}
             <div className="p-12 border-t border-stone-50 bg-[#fdfcf8] flex flex-col items-center gap-8">
-               
-               {/* LOCATION & INSTAGRAM ICONS (The Fix) */}
                <div className="flex gap-12 items-center">
                   <a 
                     href="https://www.google.com/maps/dir/?api=1&destination=1059+Flatbush+Ave+Brooklyn+NY+11226" 
@@ -124,14 +121,14 @@ export default function SidebarHeader() {
         )}
       </AnimatePresence>
 
-      {/* --- DESKTOP SIDEBAR (Fixed Left) --- */}
+      {/* --- DESKTOP SIDEBAR (Static Left) --- */}
       <header className="hidden md:flex w-20 h-screen sticky top-0 flex-col items-center justify-between py-12 border-r border-stone-100 bg-white z-50">
         <div className="flex flex-col items-center gap-4">
           <Link href="/" className="group">
             <div className="w-12 h-12 rounded-full bg-[#1B4D3E] flex items-center justify-center overflow-hidden group-hover:scale-110 transition-transform shadow-md">
               <Image 
                 src="/jus-fishy-seafood-restaurant-brooklyn-flatbush.jpg" 
-                alt="Jus Fishy"
+                alt="Jus Fishy Brooklyn Signature Logo"
                 width={50}
                 height={50}
                 className="object-cover"
@@ -140,6 +137,7 @@ export default function SidebarHeader() {
           </Link>
         </div>
 
+        {/* Desktop Rotated Navigation */}
         <nav className="flex flex-col gap-12 flex-1 justify-center">
           {navLinks.map((link) => {
             const isActive = pathname === link.href;
@@ -168,16 +166,8 @@ export default function SidebarHeader() {
           })}
         </nav>
 
+        {/* Desktop Socials (Watermark REMOVED here per request) */}
         <div className="flex flex-col items-center gap-10">
-          <Link href="https://tywebstudio.com" target="_blank" className="group">
-             <span 
-               className="text-[7px] font-black tracking-[0.4em] text-stone-300 group-hover:text-[#A8B475] transition-colors uppercase"
-               style={{ writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}
-             >
-               MADE BY TYWEBSTUDIO.COM
-             </span>
-          </Link>
-
           <a 
             href="https://www.google.com/maps/dir/?api=1&destination=1059+Flatbush+Ave+Brooklyn+NY+11226" 
             target="_blank"
