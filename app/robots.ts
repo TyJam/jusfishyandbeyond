@@ -5,7 +5,13 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: '*',
       allow: '/',
-      disallow: ['/api', '/admin'], // Protects your backend logic and studio
+     disallow: [
+        '/_next/',       // Blocks those .js chunks from the report
+        '/api/',         // Blocks your Resend/Deployment routes
+        '/admin/',       // Blocks your private dashboard
+        '/studio/',      // Blocks your Sanity editor
+        '/*.json$',      // Blocks metadata files
+      ], 
     },
     sitemap: 'https://www.jusfishyandbeyond.com/sitemap.xml',
   }
