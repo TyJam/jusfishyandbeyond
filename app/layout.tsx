@@ -3,7 +3,7 @@ import { Inter } from "next/font/google";
 import Link from "next/link";
 import "./globals.css";
 import SidebarHeader from "@/components/SidebarHeader";
-
+import EventModal from "@/components/EventModal";
 const inter = Inter({ subsets: ["latin"] });
 
 // 1. MASTER VIEWPORT CONFIG (For Mobile PWA feel)
@@ -136,7 +136,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       >
         
         <SidebarHeader />
-        
+          <EventModal />
         <div className="flex-1 relative flex flex-col min-h-screen overflow-x-hidden">
            
            {/* DESKTOP ORDER BUTTON */}
@@ -153,7 +153,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
            
            {/* MAIN CONTENT AREA */}
            <main className="w-full flex-grow pb-24 md:pb-32 pt-20 md:pt-10">
-              {children}
+            {children}
+            
            </main>
           
           {/* MASTER FLOATING BAR */}
