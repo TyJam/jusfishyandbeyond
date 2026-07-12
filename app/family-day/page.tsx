@@ -13,6 +13,8 @@ export default function FamilyDayPage() {
           alt="Jus Fishy Family Day at Prospect Park"   
           fill
           className="object-cover opacity-40 grayscale"
+          unoptimized // ADD THIS PROPERTY
+          priority
         />
         <div className="relative z-10 text-center px-6">
           <motion.p 
