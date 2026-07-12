@@ -10,7 +10,7 @@ export default function FamilyDayPage() {
       <section className="relative h-[60vh] flex items-center justify-center overflow-hidden bg-jusGreen">
         <Image 
           src="/images/events/prospect-park-jus-fishy.jpg" 
-          alt="Jus Fishy Family Day at Prospect Park"
+          alt="Jus Fishy Family Day at Prospect Park"   
           fill
           className="object-cover opacity-40 grayscale"
         />
