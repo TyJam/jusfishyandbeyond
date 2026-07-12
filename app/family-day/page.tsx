@@ -1,7 +1,7 @@
 "use client";
 import { motion } from "framer-motion";
 import Image from "next/image";
-import { Heart, Calendar, MapPin, Phone } from "lucide-react";
+import { Heart, Calendar, MapPin, PhoneCall } from "lucide-react";
 
 export default function FamilyDayPage() {
   return (
@@ -9,7 +9,7 @@ export default function FamilyDayPage() {
       {/* 1. HERO SECTION */}
       <section className="relative h-[60vh] flex items-center justify-center overflow-hidden bg-jusGreen">
         <Image 
-          src="/images/events/prospect-park-jus-fishy.jpg" 
+          src="/prospect-park-jus-fishy.jpg" 
           alt="Jus Fishy Family Day at Prospect Park"   
           fill
           className="object-cover opacity-40 grayscale"
