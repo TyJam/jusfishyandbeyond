@@ -3,7 +3,6 @@ import { Inter } from "next/font/google";
 import Link from "next/link";
 import "./globals.css";
 import SidebarHeader from "@/components/SidebarHeader";
-import EventModal from "@/components/EventModal";
 const inter = Inter({ subsets: ["latin"] });
 
 // 1. MASTER VIEWPORT CONFIG (For Mobile PWA feel)
