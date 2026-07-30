@@ -135,7 +135,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       >
         
         <SidebarHeader />
-          <EventModal />
+      
         <div className="flex-1 relative flex flex-col min-h-screen overflow-x-hidden">
            
            {/* DESKTOP ORDER BUTTON */}
