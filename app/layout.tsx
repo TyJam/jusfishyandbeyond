@@ -23,7 +23,7 @@ export const metadata: Metadata = {
   description: "Experience the best made-to-order modern seafood in Brooklyn. From signature BBQ salmon to steamed snapper, Jus Fishy & Beyond on Flatbush Ave delivers authentic Caribbean soul with elite performance.",
   keywords: ["Modern Seafood Brooklyn", "Best BBQ Salmon NYC", "Steamed Snapper Flatbush", "Caribbean Catering Brooklyn", "Seafood Bar Brooklyn", "Jus Fishy Menu"],
   alternates: {
-    canonical: "/",
+    canonical: "https://www.jusfishyandbeyond.com",
   },
   openGraph: {
     title: "Jus Fishy & Beyond | Modern Seafood & Brooklyn Soul",

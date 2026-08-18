@@ -83,10 +83,11 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   return {
     title: `${post.title} | Authentic Brooklyn Seafood | Jus Fishy & Beyond`,
     description: post.description,
-    alternates: { canonical: `/stories/${slug}` },
+    alternates: { canonical: `https://www.jusfishyandbeyond.com/stories/stories/${slug}` },
     openGraph: {
       title: post.title,
       description: post.description,
+      url: `https://www.jusfishyandbeyond.com/stories/${slug}`,
       images: [{ url: "/jus-fishy-seafood-restaurant-flatbush-brooklyn.webp" }],
       type: 'article',
     }
