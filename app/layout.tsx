@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import Link from "next/link";
 import "./globals.css";
 import SidebarHeader from "@/components/SidebarHeader";
+import ReopeningModal from "@/components/ReopeningModal"
 const inter = Inter({ subsets: ["latin"] });
 
 // 1. MASTER VIEWPORT CONFIG (For Mobile PWA feel)
@@ -133,9 +134,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         className={`${inter.className} flex min-h-screen bg-[#fdfcf8] selection:bg-[#A8B475]/30`} 
         suppressHydrationWarning
       >
-        
+     
         <SidebarHeader />
-      
+         <ReopeningModal />
         <div className="flex-1 relative flex flex-col min-h-screen overflow-x-hidden">
            
            {/* DESKTOP ORDER BUTTON */}
